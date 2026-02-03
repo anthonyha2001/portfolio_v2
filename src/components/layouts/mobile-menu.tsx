@@ -19,19 +19,20 @@ export function MobileMenu({ isOpen, onClose, navLinks, session, status }: Mobil
     <>
       {/* Overlay backdrop */}
       <div
-        className="fixed inset-0 bg-dark z-40 animate-in fade-in duration-200"
+        className="fixed inset-0 bg-dark/95 backdrop-blur-sm z-40 animate-fade-in"
         onClick={onClose}
       />
       
       {/* Menu panel */}
       <div
-        className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-dark animate-in fade-in duration-200"
+        className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-dark animate-slide-in-top"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-white text-2xl font-bold hover:opacity-70 transition-opacity"
+          className="absolute top-6 right-6 text-white text-3xl font-bold hover:opacity-70 transition-all duration-200 hover:rotate-90 animate-fade-in"
+          style={{ animationDelay: '0.2s', animationFillMode: 'both' }}
           aria-label="Close menu"
         >
           ×
@@ -39,12 +40,16 @@ export function MobileMenu({ isOpen, onClose, navLinks, session, status }: Mobil
 
         {/* Navigation links */}
         <nav className="flex flex-col items-center gap-6">
-          {navLinks.map((link) => (
+          {navLinks.map((link, index) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={onClose}
-              className="text-white text-2xl font-body hover:opacity-100 opacity-90 transition-opacity"
+              className="text-white text-2xl font-body hover:opacity-100 opacity-90 transition-all duration-300 hover:scale-105 transform animate-fade-in-up"
+              style={{ 
+                animationDelay: `${0.3 + index * 0.1}s`,
+                animationFillMode: 'both',
+              }}
             >
               {link.label}
             </Link>
@@ -52,7 +57,13 @@ export function MobileMenu({ isOpen, onClose, navLinks, session, status }: Mobil
         </nav>
 
         {/* Client Login/Logout button */}
-        <div className="mt-8">
+        <div 
+          className="mt-8 animate-fade-in-up"
+          style={{ 
+            animationDelay: `${0.3 + navLinks.length * 0.1}s`,
+            animationFillMode: 'both',
+          }}
+        >
           {status === 'authenticated' ? (
             <Button 
               variant="outline" 
