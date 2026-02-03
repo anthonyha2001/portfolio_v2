@@ -26,11 +26,8 @@ export const authOptions: NextAuthOptions = {
     error: '/login',
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
-      console.log('=== SIGN IN CALLBACK ===');
-      console.log('User:', user);
-      console.log('Account:', account);
-      console.log('Profile:', profile);
+    async signIn({ user }) {
+      console.log('SIGNIN CALLBACK:', { user: user?.email });
       return true;
     },
     async jwt({ token, user, account }) {
