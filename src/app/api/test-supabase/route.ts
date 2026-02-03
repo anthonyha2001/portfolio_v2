@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '../../../../lib/supabase';
+import type { Database } from '../../../../types/database';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
+  // Import supabase here to avoid build-time initialization
+  const { supabase } = await import('../../../../lib/supabase');
   const results = {
     connectionTest: {
       success: false,
@@ -54,22 +58,30 @@ export async function GET() {
   // Test 2: Insert test user
   try {
     console.log('Testing Supabase insert - creating test user...');
-    const { data, error } = await supabase
-      .from('users')
-      .insert({
-        email: 'test@test.com',
-        name: 'Test User',
-        role: 'client',
-        google_id: null,
-      })
+    const insertData: Database['public']['Tables']['users']['Insert'] = {
+      email: 'test@test.com',
+      name: 'Test User',
+      role: 'client',
+      google_id: null,
+    };
+    // Type assertion needed due to Supabase type inference issue
+    const supabaseClient = supabase.from('users') as unknown as {
+      insert: (data: Database['public']['Tables']['users']['Insert']) => {
+        select: () => { single: () => Promise<{ data: unknown; error: { message?: string; code?: string; details?: string; hint?: string } | null }> };
+      };
+    };
+    const result = await supabaseClient
+      .insert(insertData)
       .select()
       .single();
+
+    const { data, error } = result;
 
     if (error) {
       results.insertTest.success = false;
       results.insertTest.message = 'Error inserting test user';
       results.insertTest.error = {
-        message: error.message,
+        message: error.message || 'Unknown error',
         code: error.code,
         details: error.details,
         hint: error.hint,
@@ -77,7 +89,7 @@ export async function GET() {
       console.error('Supabase insert error:', error);
       
       // Check if error is due to duplicate (user already exists)
-      if (error.code === '23505' || error.message.includes('duplicate') || error.message.includes('unique')) {
+      if (error.code === '23505' || error.message?.includes('duplicate') || error.message?.includes('unique')) {
         results.insertTest.message = 'Test user already exists (this is expected if endpoint was called before)';
       }
     } else {
