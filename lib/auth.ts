@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
       console.log('SIGNIN CALLBACK:', { user: user?.email });
       return true;
     },
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       console.log('=== JWT CALLBACK ===');
       console.log('Token:', token);
       if (user) {
@@ -41,8 +41,8 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       console.log('=== SESSION CALLBACK ===');
       console.log('Session:', session);
-      if (session.user) {
-        session.user.id = token.id as string;
+      if (session.user && token.id) {
+        (session.user as { id?: string }).id = token.id as string;
       }
       return session;
     },

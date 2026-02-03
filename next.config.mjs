@@ -8,9 +8,6 @@ const nextConfig = {
     minimumCacheTTL: 31536000,
     domains: [],
   },
-  experimental: {
-    optimizeCss: true,
-  },
   headers: async () => [
     {
       source: '/:all*(svg|jpg|png|webp|avif|woff2)',

@@ -38,7 +38,7 @@ export default function LoginPage() {
         callbackUrl: '/portal',
         redirect: true,
       });
-    } catch (err) {
+    } catch {
       setError('Failed to sign in. Please try again.');
       setIsLoading(false);
     }

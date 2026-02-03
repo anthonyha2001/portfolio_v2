@@ -32,7 +32,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
     
     if (href) {
       return (
-        <Link href={href} className={classes} ref={ref as any}>
+        <Link href={href} className={classes} ref={ref as React.Ref<HTMLAnchorElement>}>
           {children}
         </Link>
       );
@@ -44,7 +44,7 @@ const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
         onClick={onClick}
         disabled={disabled}
         className={classes}
-        ref={ref as any}
+        ref={ref as React.Ref<HTMLButtonElement>}
       >
         {children}
       </button>

@@ -9,7 +9,7 @@ import { MobileMenu } from './mobile-menu';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const navLinks = [
     { href: '/services', label: 'Services' },
@@ -108,7 +108,6 @@ export function Header() {
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
         navLinks={navLinks}
-        session={session}
         status={status}
       />
     </>

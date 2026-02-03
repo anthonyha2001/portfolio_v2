@@ -8,11 +8,10 @@ interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   navLinks: Array<{ href: string; label: string }>;
-  session: any;
   status: 'loading' | 'authenticated' | 'unauthenticated';
 }
 
-export function MobileMenu({ isOpen, onClose, navLinks, session, status }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose, navLinks, status }: MobileMenuProps) {
   if (!isOpen) return null;
 
   return (
