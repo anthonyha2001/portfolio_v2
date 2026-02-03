@@ -68,7 +68,7 @@ export function Header() {
                 <Button 
                   variant="outline" 
                   size="sm"
-                  className="border-white text-white hover:bg-white hover:text-[#1C2343]"
+                  className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
                   onClick={() => signOut({ callbackUrl: '/' })}
                 >
                   Logout
@@ -78,7 +78,7 @@ export function Header() {
                   <Button 
                     variant="outline" 
                     size="sm"
-                    className="border-white text-white hover:bg-white hover:text-[#1C2343]"
+                    className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
                   >
                     Client Login
                   </Button>
