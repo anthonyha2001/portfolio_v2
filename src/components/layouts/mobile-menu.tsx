@@ -66,7 +66,8 @@ export function MobileMenu({ isOpen, onClose, navLinks, status }: MobileMenuProp
           {status === 'authenticated' ? (
             <Button 
               variant="outline" 
-              size="md"
+              size="sm"
+              className="border-white text-white hover:bg-white hover:text-[#1C2343]"
               onClick={() => {
                 onClose();
                 signOut({ callbackUrl: '/' });
@@ -76,7 +77,11 @@ export function MobileMenu({ isOpen, onClose, navLinks, status }: MobileMenuProp
             </Button>
           ) : (
             <Link href="/login" onClick={onClose}>
-              <Button variant="outline" size="md">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border-white text-white hover:bg-white hover:text-[#1C2343]"
+              >
                 Client Login
               </Button>
             </Link>
