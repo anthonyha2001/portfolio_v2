@@ -59,7 +59,7 @@ export function Header() {
               ))}
             </nav>
 
-          {/* Desktop Start Project + Client Login */}
+          {/* Desktop Start Project */}
           <div className="hidden md:flex items-center gap-3">
             <Link href="/start-project">
               <Button
@@ -68,15 +68,6 @@ export function Header() {
                 className="bg-accent text-white hover:bg-accent/90"
               >
                 Start Project
-              </Button>
-            </Link>
-            <Link href="/portal">
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
-              >
-                Client Login
               </Button>
             </Link>
           </div>

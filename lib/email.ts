@@ -32,6 +32,7 @@ interface IntakeFormData {
 }
 
 export async function sendIntakeEmail(data: IntakeFormData) {
+  console.log('sendIntakeEmail called with data:', JSON.stringify(data, null, 2));
   const specsText = `
 Contact Name: ${data.contactName || data.userName || 'N/A'}
 Contact Email: ${data.contactEmail || data.userEmail || 'N/A'}
@@ -231,7 +232,10 @@ Additional Notes: ${data.additionalNotes || 'N/A'}
     text: `New Project Intake\n\n${specsText}`,
   };
 
-  return transporter.sendMail(mailOptions);
+  console.log('About to call transporter.sendMail');
+  const result = await transporter.sendMail(mailOptions);
+  console.log('transporter.sendMail succeeded:', result);
+  return result;
 }
 
 

@@ -76,6 +76,8 @@ export function PublicIntakeForm() {
   }, [formValues]);
 
   const onSubmit = async (data: PublicIntakeFormData) => {
+    console.log('Submit clicked');
+    console.log('Form data:', JSON.stringify(data, null, 2));
     setIsSubmitting(true);
     try {
       const response = await fetch('/api/intake/public-submit', {
@@ -83,6 +85,10 @@ export function PublicIntakeForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
+
+      console.log('Response status:', response.status);
+      const responseBody = await response.json();
+      console.log('Response body:', JSON.stringify(responseBody, null, 2));
 
       if (!response.ok) {
         throw new Error('Failed to submit');
