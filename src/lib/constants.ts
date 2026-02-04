@@ -1,13 +1,14 @@
 export const hero = {
-  headline: "Premium Websites. $150. 72 Hours.",
-  subheadline: "Fast, affordable, no-nonsense web development for businesses that need to launch now.",
+  headline: "Premium Websites. Fast Delivery.",
+  subheadline:
+    "Custom web development, SEO, hosting, and maintenance for businesses that need to move quickly.",
   cta: "Get Started",
 };
 
 export const speedProofStats = [
-  { value: "$150", label: "Starting at" },
-  { value: "72h", label: "Delivery" },
-  { value: "Client portal", label: "Tracking" },
+  { value: "Fast delivery", label: "Launch-ready websites" },
+  { value: "Full stack", label: "Frontend & backend" },
+  { value: "Client portal", label: "Tracked delivery" },
 ];
 
 export const whoItsFor = [
@@ -25,19 +26,40 @@ export const whoItsNotFor = [
 
 export const servicesSnapshot = [
   {
-    title: "Starter Site",
-    price: "$150",
-    description: "One-page website, mobile-ready, delivered in 72h",
+    title: "Website Development",
+    description:
+      "Custom frontend and backend development. Modern, responsive websites built to convert.",
+    icon: "code",
   },
   {
-    title: "Business Site",
-    price: "$300",
-    description: "Multi-page website with contact form and basic SEO",
+    title: "SEO Optimization",
+    description:
+      "Boost your search rankings. On-page SEO, keyword optimization, and technical SEO audits.",
+    icon: "search",
   },
   {
-    title: "Custom Build",
-    price: "From $500",
-    description: "Tailored solution for specific needs",
+    title: "Website Maintenance",
+    description:
+      "Keep your site secure and up-to-date. Regular updates, backups, and performance monitoring.",
+    icon: "shield",
+  },
+  {
+    title: "Hosting & Domain",
+    description:
+      "Reliable hosting solutions. Fast servers, SSL certificates, and domain management.",
+    icon: "server",
+  },
+  {
+    title: "Website Optimization",
+    description:
+      "Speed up your site. Performance tuning, image optimization, and Core Web Vitals improvement.",
+    icon: "zap",
+  },
+  {
+    title: "Add-ons & Integrations",
+    description:
+      "Extend your site. Payment systems, booking forms, analytics, and third-party integrations.",
+    icon: "plus",
   },
 ];
 
@@ -79,63 +101,80 @@ export const portfolioPreview = [
 
 export const serviceTiers = [
   {
-    name: "Starter Site",
-    price: "$150",
-    description: "Perfect for launching fast",
+    name: "Frontend Development",
+    description: "Beautiful, responsive user interfaces",
     includes: [
-      "One-page design",
-      "Mobile responsive",
-      "Contact section",
-      "72-hour delivery",
-      "1 round of revisions",
-    ],
-    notIncluded: [
-      "Multiple pages",
-      "Custom forms",
-      "Ongoing maintenance",
+      "Custom design implementation",
+      "Mobile-first responsive layouts",
+      "Interactive UI components",
+      "Cross-browser compatibility",
+      "Performance optimization",
     ],
   },
   {
-    name: "Business Site",
-    price: "$300",
-    description: "For established small businesses",
+    name: "Backend Development",
+    description: "Powerful server-side solutions",
     includes: [
-      "Up to 5 pages",
-      "Mobile responsive",
-      "Contact form",
-      "Basic SEO setup",
-      "72-hour delivery",
-      "2 rounds of revisions",
+      "Database design & setup",
+      "API development",
+      "User authentication",
+      "Admin dashboards",
+      "Third-party integrations",
     ],
-    notIncluded: [
-      "E-commerce",
-      "Blog functionality",
-      "Ongoing maintenance",
-    ],
-    popular: true,
   },
   {
-    name: "Custom Build",
-    price: "From $500",
-    description: "Tailored to your needs",
+    name: "SEO Optimization",
+    description: "Get found on Google",
     includes: [
-      "Unlimited pages",
-      "Custom functionality",
-      "Advanced SEO",
-      "Priority support",
-      "3 rounds of revisions",
+      "Keyword research",
+      "On-page SEO",
+      "Technical SEO audit",
+      "Meta tags & schema markup",
+      "Performance optimization",
     ],
-    notIncluded: [
-      "Scope determined per project",
+  },
+  {
+    name: "Website Maintenance",
+    description: "Keep your site running smoothly",
+    includes: [
+      "Regular updates & patches",
+      "Security monitoring",
+      "Daily backups",
+      "Uptime monitoring",
+      "Bug fixes & support",
+    ],
+  },
+  {
+    name: "Hosting & Domain",
+    description: "Reliable infrastructure",
+    includes: [
+      "Fast SSD hosting",
+      "SSL certificate",
+      "Domain registration",
+      "Email setup",
+      "CDN integration",
+    ],
+  },
+  {
+    name: "Add-ons & Integrations",
+    description: "Extend your website capabilities",
+    includes: [
+      "Payment gateways",
+      "Booking systems",
+      "Live chat",
+      "Analytics setup",
+      "Social media integration",
     ],
   },
 ];
 
 export const addons = [
-  { name: "Extra revision round", price: "$50" },
-  { name: "Logo design", price: "$75" },
-  { name: "Monthly maintenance", price: "$30/mo" },
-  { name: "Additional page", price: "$40" },
+  { name: "E-commerce Integration", description: "Sell products online" },
+  { name: "Blog Setup", description: "Content management system" },
+  { name: "Newsletter Integration", description: "Email marketing setup" },
+  { name: "Live Chat", description: "Customer support widget" },
+  { name: "Analytics Dashboard", description: "Track your visitors" },
+  { name: "Multi-language Support", description: "Reach global audiences" },
 ];
 
 export const processPage = {
@@ -367,7 +406,15 @@ export const contactFormFields = [
     label: "Service Interested In",
     type: "select",
     required: true,
-    options: ["Starter Site - $150", "Business Site - $300", "Custom Build - From $500", "Not sure yet"],
+    options: [
+      "Website Development",
+      "SEO Optimization",
+      "Website Maintenance",
+      "Hosting & Domain",
+      "Website Optimization",
+      "Add-ons & Integrations",
+      "Not sure yet",
+    ],
   },
   {
     name: "timeline",

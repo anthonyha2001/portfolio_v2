@@ -21,8 +21,9 @@ const HomeCTA = nextDynamic(() => import('@/components/sections/home-cta').then(
 });
 
 export const metadata: Metadata = {
-  title: 'Premium Websites. $150. 72 Hours. | Anthony Hasrouny',
-  description: 'Fast, affordable, no-nonsense web development for businesses that need to launch now. Premium websites delivered in 72 hours.',
+  title: 'Premium Websites. Fast Delivery. | Anthony Hasrouny',
+  description:
+    'Fast, no-nonsense web development for businesses that need to launch now. Premium websites, SEO, hosting, and maintenance.',
 };
 
 export default function Home() {
