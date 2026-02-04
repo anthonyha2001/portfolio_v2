@@ -53,21 +53,30 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
           ))}
         </nav>
 
-        {/* Contact button (temporarily replacing portal/login) */}
-        <div 
-          className="mt-8 animate-fade-in-up"
-          style={{ 
+        {/* Start Project + Client Login buttons */}
+        <div
+          className="mt-8 flex flex-col items-center gap-3 animate-fade-in-up"
+          style={{
             animationDelay: `${0.3 + navLinks.length * 0.1}s`,
             animationFillMode: 'both',
           }}
         >
-          <Link href="/contact" onClick={onClose}>
-            <Button 
-              variant="outline" 
+          <Link href="/portal/intake" onClick={onClose}>
+            <Button
+              variant="primary"
               size="sm"
-              className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
+              className="w-40 bg-accent text-white hover:bg-accent/90"
             >
-              Contact
+              Start Project
+            </Button>
+          </Link>
+          <Link href="/portal" onClick={onClose}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-40 border-white text-white hover:bg-white hover:!text-[#1C2343]"
+            >
+              Client Login
             </Button>
           </Link>
         </div>

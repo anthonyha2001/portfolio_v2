@@ -14,7 +14,6 @@ export function Header() {
     { href: '/process', label: 'Process' },
     { href: '/portfolio', label: 'Portfolio' },
     { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' },
   ];
 
   // Prevent body scroll when menu is open
@@ -60,18 +59,27 @@ export function Header() {
               ))}
             </nav>
 
-            {/* Desktop Contact Button (temporarily replacing portal/login) */}
-            <div className="hidden md:block">
-              <Link href="/contact">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
-                >
-                  Contact
-                </Button>
-              </Link>
-            </div>
+          {/* Desktop Start Project + Client Login */}
+          <div className="hidden md:flex items-center gap-3">
+            <Link href="/portal/intake">
+              <Button
+                variant="primary"
+                size="sm"
+                className="bg-accent text-white hover:bg-accent/90"
+              >
+                Start Project
+              </Button>
+            </Link>
+            <Link href="/portal">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
+              >
+                Client Login
+              </Button>
+            </Link>
+          </div>
 
             {/* Mobile Hamburger */}
             <button
