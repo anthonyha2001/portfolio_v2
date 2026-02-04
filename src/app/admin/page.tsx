@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { adminClientsMockData } from '@/lib/constants';
+// Mock data removed - will fetch from Supabase via API
+const adminClientsMockData: never[] = [];
 import { ClientsStats } from '@/components/admin/clients-stats';
 import { ClientFilters } from '@/components/admin/client-filters';
 import { AddClientButton } from '@/components/admin/add-client-button';
@@ -12,7 +13,17 @@ export default function AdminPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredClients = useMemo(() => {
-    return adminClientsMockData.filter((client) => {
+    // TODO: Fetch from Supabase API
+    return (adminClientsMockData as Array<{
+      id: string;
+      name: string;
+      email: string;
+      projectName: string | null;
+      status: string;
+      currentStage: number;
+      createdAt: string;
+      intakeComplete: boolean;
+    }>).filter((client) => {
       const matchesStatus = statusFilter === 'all' || client.status === statusFilter;
       const matchesSearch =
         searchQuery === '' ||
@@ -30,7 +41,16 @@ export default function AdminPage() {
         </h1>
       </div>
 
-      <ClientsStats clients={adminClientsMockData} />
+      <ClientsStats clients={adminClientsMockData as Array<{
+        id: string;
+        name: string;
+        email: string;
+        projectName: string | null;
+        status: string;
+        currentStage: number;
+        createdAt: string;
+        intakeComplete: boolean;
+      }>} />
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <ClientFilters

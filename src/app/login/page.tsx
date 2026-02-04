@@ -8,7 +8,7 @@ import { Container } from '@/components/ui/container';
 import { Section } from '@/components/ui/section';
 
 export default function LoginPage() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -22,20 +22,36 @@ export default function LoginPage() {
     }
   }, [searchParams]);
 
-  // Redirect if already logged in
+  // Redirect if already logged in - check role to determine destination
   useEffect(() => {
-    if (status === 'authenticated') {
-      router.push('/portal');
+    console.log('Login page useEffect - status:', status, 'has session:', !!session);
+    if (status === 'authenticated' && session) {
+      const role = (session.user as { role?: string })?.role;
+      console.log('Login page - User role from session:', role);
+      console.log('Login page - User object:', session.user);
+      console.log('Login page - Full session keys:', Object.keys(session));
+      
+      if (role === 'admin') {
+        console.log('Redirecting admin to /admin');
+        router.push('/admin');
+      } else if (role === 'client' || !role) {
+        console.log('Redirecting client to /portal (role:', role, ')');
+        router.push('/portal');
+      } else {
+        console.log('Unknown role, defaulting to portal:', role);
+        router.push('/portal');
+      }
     }
-  }, [status, router]);
+  }, [status, session, router]);
 
   const handleGoogleSignIn = async () => {
     try {
       setIsLoading(true);
       setError(null);
 
+      // Don't set callbackUrl - let the redirect callback handle it
+      // We'll check role after redirect in the useEffect
       await signIn('google', {
-        callbackUrl: '/portal',
         redirect: true,
       });
     } catch {

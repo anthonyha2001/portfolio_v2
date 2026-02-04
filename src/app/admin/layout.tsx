@@ -15,12 +15,11 @@ export default async function AdminLayout({
     redirect('/login');
   }
 
-  // TODO: Check if user role is admin
-  // For now, we'll allow access if session exists
-  // In production, check session.user.role === 'admin'
-  // if (session.user?.role !== 'admin') {
-  //   redirect('/portal');
-  // }
+  // Check if user role is admin - CRITICAL SECURITY CHECK
+  const userRole = (session.user as { role?: string })?.role;
+  if (userRole !== 'admin') {
+    redirect('/portal');
+  }
 
   return (
     <div className="min-h-screen bg-light flex">

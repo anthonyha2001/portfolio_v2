@@ -1,14 +1,23 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { adminClientsMockData } from '@/lib/constants';
+// Mock data removed - will fetch from Supabase via API
+const adminClientsMockData: never[] = [];
 import { projectStages } from '@/lib/constants';
 
 export default function ProjectsPage() {
   const router = useRouter();
 
+  // TODO: Fetch from Supabase API
   // Convert clients to projects (using clients that have projects)
-  const projects = adminClientsMockData
+  const projects = (adminClientsMockData as Array<{
+    id: string;
+    name: string;
+    projectName: string | null;
+    currentStage: number;
+    status: string;
+    createdAt: string;
+  }>)
     .filter((client) => client.projectName)
     .map((client) => ({
       id: client.id,

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { adminClientsMockData } from '@/lib/constants';
+// Mock data removed - will fetch from Supabase via API
+const adminClientsMockData: never[] = [];
 
 interface CreateInvoiceModalProps {
   isOpen: boolean;
@@ -27,7 +28,10 @@ export function CreateInvoiceModal({
   if (!isOpen) return null;
 
   const handleClientChange = (clientId: string) => {
-    const client = adminClientsMockData.find((c) => c.id === clientId);
+    const client = (adminClientsMockData as Array<{
+      id: string;
+      projectName: string | null;
+    }>).find((c) => c.id === clientId);
     setFormData({
       ...formData,
       clientId,
@@ -114,7 +118,7 @@ export function CreateInvoiceModal({
                 }`}
               >
                 <option value="">Select a client...</option>
-                {adminClientsMockData.map((client) => (
+                {(adminClientsMockData as Array<{ id: string; name: string }>).map((client) => (
                   <option key={client.id} value={client.id}>
                     {client.name}
                   </option>

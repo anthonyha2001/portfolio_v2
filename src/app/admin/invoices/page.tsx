@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { adminInvoicesMockData } from '@/lib/constants';
+// Mock data removed - will fetch from Supabase via API
+const adminInvoicesMockData: never[] = [];
 import { InvoiceStats } from '@/components/admin/invoice-stats';
 import { InvoicesTable } from '@/components/admin/invoices-table';
 import { CreateInvoiceModal } from '@/components/admin/create-invoice-modal';
@@ -12,7 +13,20 @@ export default function InvoicesPage() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   const filteredInvoices = useMemo(() => {
-    return adminInvoicesMockData.filter((invoice) => {
+    // TODO: Fetch from Supabase API
+    return (adminInvoicesMockData as Array<{
+      id: string;
+      clientId: string;
+      clientName: string;
+      projectId: string;
+      projectName: string;
+      description: string;
+      amount: number;
+      status: string;
+      dueDate: string;
+      paidDate: string | null;
+      createdAt: string;
+    }>).filter((invoice) => {
       if (statusFilter === 'all') return true;
       if (statusFilter === 'overdue') {
         const today = new Date();
@@ -56,7 +70,19 @@ export default function InvoicesPage() {
         </h1>
       </div>
 
-      <InvoiceStats invoices={adminInvoicesMockData} />
+      <InvoiceStats invoices={adminInvoicesMockData as Array<{
+        id: string;
+        clientId: string;
+        clientName: string;
+        projectId: string;
+        projectName: string;
+        description: string;
+        amount: number;
+        status: string;
+        dueDate: string;
+        paidDate: string | null;
+        createdAt: string;
+      }>} />
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <select

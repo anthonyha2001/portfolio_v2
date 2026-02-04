@@ -1,6 +1,16 @@
 'use client';
 
-import { adminProjectDetailMockData } from '@/lib/constants';
+// Mock data removed - will fetch from Supabase via API
+const adminProjectDetailMockData: {
+  projectName: string;
+  clientName: string;
+  clientEmail: string;
+  status: string;
+  stages: Array<{ id: number; name: string; status: string; completedDate?: string; startedDate?: string; note?: string | null }>;
+  waitingOnClient: boolean;
+  waitingReason: string;
+  intakeData: Record<string, unknown>;
+} | null = null;
 import { ProjectHeader } from '@/components/admin/project-header';
 import { StageEditor } from '@/components/admin/stage-editor';
 import { WaitingToggle } from '@/components/admin/waiting-toggle';
@@ -8,9 +18,16 @@ import { IntakeViewer } from '@/components/admin/intake-viewer';
 import { ProjectNotesPanel } from '@/components/admin/project-notes-panel';
 
 export default function ProjectDetailPage() {
-  // In production, fetch project by ID using params.id
-  // For now, use mock data
+  // TODO: Fetch project by ID from Supabase using params.id
   const project = adminProjectDetailMockData;
+
+  if (!project) {
+    return (
+      <div>
+        <p className="text-gray font-body">Project not found.</p>
+      </div>
+    );
+  }
 
   const handleProjectNameChange = (newName: string) => {
     console.log('Project name changed to:', newName);
