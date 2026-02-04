@@ -62,28 +62,17 @@ export function Header() {
               ))}
             </nav>
 
-            {/* Desktop Login/Logout Button */}
+            {/* Desktop Contact Button (temporarily replacing portal/login) */}
             <div className="hidden md:block">
-              {status === 'authenticated' ? (
+              <Link href="/contact">
                 <Button 
                   variant="outline" 
                   size="sm"
                   className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
-                  onClick={() => signOut({ callbackUrl: '/' })}
                 >
-                  Logout
+                  Contact
                 </Button>
-              ) : (
-                <Link href="/login">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
-                  >
-                    Client Login
-                  </Button>
-                </Link>
-              )}
+              </Link>
             </div>
 
             {/* Mobile Hamburger */}

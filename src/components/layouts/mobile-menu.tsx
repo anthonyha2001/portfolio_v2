@@ -55,7 +55,7 @@ export function MobileMenu({ isOpen, onClose, navLinks, status }: MobileMenuProp
           ))}
         </nav>
 
-        {/* Client Login/Logout button */}
+        {/* Contact button (temporarily replacing portal/login) */}
         <div 
           className="mt-8 animate-fade-in-up"
           style={{ 
@@ -63,29 +63,15 @@ export function MobileMenu({ isOpen, onClose, navLinks, status }: MobileMenuProp
             animationFillMode: 'both',
           }}
         >
-          {status === 'authenticated' ? (
+          <Link href="/contact" onClick={onClose}>
             <Button 
               variant="outline" 
               size="sm"
               className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
-              onClick={() => {
-                onClose();
-                signOut({ callbackUrl: '/' });
-              }}
             >
-              Logout
+              Contact
             </Button>
-          ) : (
-            <Link href="/login" onClick={onClose}>
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-white text-white hover:bg-white hover:!text-[#1C2343]"
-              >
-                Client Login
-              </Button>
-            </Link>
-          )}
+          </Link>
         </div>
       </div>
     </>
