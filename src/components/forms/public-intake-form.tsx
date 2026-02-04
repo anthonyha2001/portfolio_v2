@@ -76,6 +76,7 @@ export function PublicIntakeForm() {
   }, [formValues]);
 
   const onSubmit = async (data: PublicIntakeFormData) => {
+    alert('Submit clicked');
     console.log('Submit clicked');
     console.log('Form data:', JSON.stringify(data, null, 2));
     setIsSubmitting(true);
@@ -197,7 +198,16 @@ export function PublicIntakeForm() {
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={handleSubmit(
+          onSubmit,
+          (errors) => {
+            console.log('Form validation errors:', errors);
+            alert(`Form has validation errors. Please check the form. Errors: ${Object.keys(errors).join(', ')}`);
+          }
+        )}
+        className="space-y-6"
+      >
         {currentStep === 1 && (
           <div className="space-y-6">
             {/* Contact fields */}
@@ -560,7 +570,14 @@ export function PublicIntakeForm() {
                 Save & Continue
               </Button>
             ) : (
-              <Button type="submit" variant="primary" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={isSubmitting}
+                onClick={() => {
+                  console.log('Submit button clicked directly');
+                }}
+              >
                 {isSubmitting ? 'Submitting...' : 'Submit Intake'}
               </Button>
             )}
