@@ -3,14 +3,34 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { intakeFormSchema, type IntakeFormData } from '@/lib/validations';
-import { intakeFormSteps, brandVibeOptions, pageOptions, featureOptions } from '@/lib/constants';
+import { z } from 'zod';
+import {
+  intakeFormSchema,
+  type IntakeFormData,
+} from '@/lib/validations';
+import {
+  intakeFormSteps,
+  brandVibeOptions,
+  pageOptions,
+  featureOptions,
+} from '@/lib/constants';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 
-const STORAGE_KEY = 'intake-form-draft';
+const STORAGE_KEY = 'public-intake-form-draft';
 
-export function IntakeForm() {
+const publicIntakeSchema = intakeFormSchema.extend({
+  contactName: z.string().min(1, 'Name is required'),
+  contactEmail: z.string().email('Valid email is required'),
+  contactPhone: z.string().optional(),
+});
+
+type PublicIntakeFormData = IntakeFormData & {
+  contactName: string;
+  contactEmail: string;
+  contactPhone?: string;
+};
+
+export function PublicIntakeForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -22,8 +42,8 @@ export function IntakeForm() {
     watch,
     formState: { errors },
     setValue,
-  } = useForm<IntakeFormData>({
-    resolver: zodResolver(intakeFormSchema),
+  } = useForm<PublicIntakeFormData>({
+    resolver: zodResolver(publicIntakeSchema),
     defaultValues: {
       requiredPages: [],
       requiredFeatures: [],
@@ -38,9 +58,11 @@ export function IntakeForm() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
-        const data = JSON.parse(saved);
-        Object.keys(data).forEach((key) => {
-          setValue(key as keyof IntakeFormData, data[key]);
+        const data = JSON.parse(saved) as Partial<PublicIntakeFormData>;
+        (Object.keys(data) as (keyof PublicIntakeFormData)[]).forEach((key) => {
+          if (data[key] !== undefined) {
+            setValue(key, data[key] as PublicIntakeFormData[typeof key]);
+          }
         });
       } catch (error) {
         console.error('Error loading form data:', error);
@@ -53,10 +75,10 @@ export function IntakeForm() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
   }, [formValues]);
 
-  const onSubmit = async (data: IntakeFormData) => {
+  const onSubmit = async (data: PublicIntakeFormData) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/intake/submit', {
+      const response = await fetch('/api/intake/public-submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -69,7 +91,7 @@ export function IntakeForm() {
       localStorage.removeItem(STORAGE_KEY);
       setIsSubmitted(true);
     } catch (error) {
-      console.error('Submission error:', error);
+      console.error('Public intake submission error:', error);
       alert('Failed to submit. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -110,18 +132,15 @@ export function IntakeForm() {
         <h2 className="text-2xl font-display font-bold text-dark mb-4">
           Intake submitted!
         </h2>
-        <p className="text-lg font-body text-gray mb-6">
-          The 72-hour clock starts now.
+        <p className="text-lg font-body text-gray mb-2">
+          I&apos;ll review your project details and get back to you within 24 hours.
         </p>
-        <Link href="/portal">
-          <Button variant="primary" size="lg">
-            Back to Dashboard
-          </Button>
-        </Link>
+        <p className="text-sm font-body text-gray">
+          You&apos;ll receive an email confirmation shortly.
+        </p>
       </div>
     );
   }
-
 
   return (
     <div className="space-y-8">
@@ -175,6 +194,56 @@ export function IntakeForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {currentStep === 1 && (
           <div className="space-y-6">
+            {/* Contact fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-body font-medium text-dark mb-2">
+                  Your Name <span className="text-accent">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register('contactName')}
+                  className={`w-full px-4 py-3 border rounded-md font-body text-dark focus:outline-none focus:ring-2 focus:ring-accent ${
+                    errors.contactName ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+                {errors.contactName && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.contactName.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className="block text-sm font-body font-medium text-dark mb-2">
+                  Email <span className="text-accent">*</span>
+                </label>
+                <input
+                  type="email"
+                  {...register('contactEmail')}
+                  className={`w-full px-4 py-3 border rounded-md font-body text-dark focus:outline-none focus:ring-2 focus:ring-accent ${
+                    errors.contactEmail ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+                {errors.contactEmail && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.contactEmail.message}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-body font-medium text-dark mb-2">
+                Phone (optional)
+              </label>
+              <input
+                type="tel"
+                {...register('contactPhone')}
+                className="w-full px-4 py-3 border border-gray-300 rounded-md font-body text-dark focus:outline-none focus:ring-2 focus:ring-accent"
+              />
+            </div>
+
+            {/* Business fields */}
             <div>
               <label className="block text-sm font-body font-medium text-dark mb-2">
                 Business Name <span className="text-accent">*</span>
@@ -187,7 +256,9 @@ export function IntakeForm() {
                 }`}
               />
               {errors.businessName && (
-                <p className="mt-1 text-sm text-red-600">{errors.businessName.message}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.businessName.message}
+                </p>
               )}
             </div>
 
@@ -199,11 +270,15 @@ export function IntakeForm() {
                 rows={4}
                 {...register('businessDescription')}
                 className={`w-full px-4 py-3 border rounded-md font-body text-dark focus:outline-none focus:ring-2 focus:ring-accent resize-y ${
-                  errors.businessDescription ? 'border-red-500' : 'border-gray-300'
+                  errors.businessDescription
+                    ? 'border-red-500'
+                    : 'border-gray-300'
                 }`}
               />
               {errors.businessDescription && (
-                <p className="mt-1 text-sm text-red-600">{errors.businessDescription.message}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.businessDescription.message}
+                </p>
               )}
             </div>
 
@@ -311,7 +386,8 @@ export function IntakeForm() {
               </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {pageOptions.map((page) => {
-                  const isChecked = (watch('requiredPages') || []).includes(page);
+                  const current = watch('requiredPages') || [];
+                  const isChecked = current.includes(page);
                   return (
                     <label
                       key={page}
@@ -323,7 +399,9 @@ export function IntakeForm() {
                         onChange={() => handlePageToggle(page)}
                         className="w-4 h-4 text-accent"
                       />
-                      <span className="font-body text-dark text-sm">{page}</span>
+                      <span className="font-body text-dark text-sm">
+                        {page}
+                      </span>
                     </label>
                   );
                 })}
@@ -336,7 +414,8 @@ export function IntakeForm() {
               </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {featureOptions.map((feature) => {
-                  const isChecked = (watch('requiredFeatures') || []).includes(feature);
+                  const current = watch('requiredFeatures') || [];
+                  const isChecked = current.includes(feature);
                   return (
                     <label
                       key={feature}
@@ -348,7 +427,9 @@ export function IntakeForm() {
                         onChange={() => handleFeatureToggle(feature)}
                         className="w-4 h-4 text-accent"
                       />
-                      <span className="font-body text-dark text-sm">{feature}</span>
+                      <span className="font-body text-dark text-sm">
+                        {feature}
+                      </span>
                     </label>
                   );
                 })}
@@ -367,7 +448,9 @@ export function IntakeForm() {
                     {...register('contentReady')}
                     className="w-4 h-4 text-accent"
                   />
-                  <span className="font-body text-dark">Yes I have content ready</span>
+                  <span className="font-body text-dark">
+                    Yes I have content ready
+                  </span>
                 </label>
                 <label className="flex items-center gap-2">
                   <input
@@ -376,7 +459,9 @@ export function IntakeForm() {
                     {...register('contentReady')}
                     className="w-4 h-4 text-accent"
                   />
-                  <span className="font-body text-dark">No I need help</span>
+                  <span className="font-body text-dark">
+                    No I need help
+                  </span>
                 </label>
               </div>
             </div>
@@ -479,4 +564,5 @@ export function IntakeForm() {
     </div>
   );
 }
+
 

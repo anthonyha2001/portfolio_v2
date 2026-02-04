@@ -61,7 +61,7 @@ export function Header() {
 
           {/* Desktop Start Project + Client Login */}
           <div className="hidden md:flex items-center gap-3">
-            <Link href="/portal/intake">
+            <Link href="/start-project">
               <Button
                 variant="primary"
                 size="sm"

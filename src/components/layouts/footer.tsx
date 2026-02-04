@@ -9,7 +9,7 @@ export function Footer() {
     { href: '/process', label: 'Process' },
     { href: '/portfolio', label: 'Portfolio' },
     { href: '/about', label: 'About' },
-    { href: '/portal/intake', label: 'Start Project' },
+    { href: '/start-project', label: 'Start Project' },
   ];
 
   return (

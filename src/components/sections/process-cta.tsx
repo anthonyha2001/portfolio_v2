@@ -12,7 +12,7 @@ export function ProcessCTA() {
             Ready to start the clock?
           </h2>
           <div className="pt-4">
-            <Link href="/contact">
+            <Link href="/start-project">
               <Button variant="primary" size="lg">
                 Begin Your Project
               </Button>

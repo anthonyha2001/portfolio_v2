@@ -61,7 +61,7 @@ export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
             animationFillMode: 'both',
           }}
         >
-          <Link href="/portal/intake" onClick={onClose}>
+          <Link href="/start-project" onClick={onClose}>
             <Button
               variant="primary"
               size="sm"

@@ -15,7 +15,7 @@ export function HomeCTA() {
             Get your website in 72 hours.
           </p>
           <div>
-            <Link href="/contact">
+            <Link href="/start-project">
               <Button variant="primary" size="lg">
                 Start Your Project
               </Button>

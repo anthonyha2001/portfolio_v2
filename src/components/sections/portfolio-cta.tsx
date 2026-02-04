@@ -15,7 +15,7 @@ export function PortfolioCTA() {
             Let&apos;s build your website.
           </p>
           <div className="pt-4">
-            <Link href="/contact">
+            <Link href="/start-project">
               <Button variant="primary" size="lg">
                 Start Your Project
               </Button>

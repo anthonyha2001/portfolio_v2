@@ -31,7 +31,7 @@ export function Hero() {
             </p>
             <div className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <Link href="/contact">
+              <Link href="/start-project">
                 <Button variant="primary" size="lg" className="font-semibold px-7 py-3 rounded-lg">
                   {hero.cta}
                 </Button>
