@@ -14,6 +14,7 @@ export function Header() {
     { href: '/process', label: 'Process' },
     { href: '/portfolio', label: 'Portfolio' },
     { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
   ];
 
   // Prevent body scroll when menu is open
