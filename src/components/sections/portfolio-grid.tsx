@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Container } from '@/components/ui/container';
 import { Section } from '@/components/ui/section';
 import { portfolioProjects } from '@/lib/constants';
@@ -17,9 +18,20 @@ export function PortfolioGrid() {
                 key={project.id}
                 className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center"
               >
-                {/* Image placeholder */}
+                {/* Image */}
                 <div className={`${imageOrder}`}>
-                  <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg"></div>
+                  {project.id === 'eliche-radice' ? (
+                    <div className="w-full aspect-[4/3] relative rounded-lg overflow-hidden">
+                      <Image
+                        src="/eliceradice.png"
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg"></div>
+                  )}
                 </div>
 
                 {/* Content */}

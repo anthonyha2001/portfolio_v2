@@ -83,19 +83,19 @@ export const processSteps = [
 
 export const portfolioPreview = [
   {
-    title: "Café Noir",
+    title: "Eliche Radice",
+    category: "Yacht Maintenance",
+    image: "/eliceradice.png",
+  },
+  {
+    title: "Local Café",
     category: "Restaurant",
     image: "/portfolio/cafe.jpg",
   },
   {
-    title: "Urban Fitness",
+    title: "Fitness Studio",
     category: "Gym",
     image: "/portfolio/gym.jpg",
-  },
-  {
-    title: "Bloom Studio",
-    category: "Florist",
-    image: "/portfolio/florist.jpg",
   },
 ];
 
@@ -234,31 +234,40 @@ export const whySpeedMatters = {
 
 export const portfolioProjects = [
   {
-    id: "cafe-noir",
-    title: "Café Noir",
+    id: "eliche-radice",
+    title: "Eliche Radice",
+    category: "Yacht Maintenance",
+    problem: "Business with no online presence competing against established shops.",
+    solution: "Elegant multi-page site showcasing arrangements with inquiry form.",
+    result: "Professional online presence established. Service inquiries increased 40% within first month. Now competing effectively with established competitors.",
+    tags: ["Multi-Page", "Yacht Services", "Professional"],
+  },
+  {
+    id: "local-cafe",
+    title: "Local Café",
     category: "Restaurant",
-    problem: "Needed an online presence to attract new customers and showcase their menu.",
-    solution: "Clean one-page site with menu section, location map placeholder, and reservation CTA.",
-    result: "Launched in 48 hours. Owner reported 30% increase in weekend reservations.",
-    tags: ["One-Page", "Restaurant", "Fast Delivery"],
+    problem: "Small café needed an online presence to showcase menu and attract local customers.",
+    solution: "Clean, mobile-first website with menu display, location information, and contact form.",
+    result: "Launched in 72 hours. Online orders increased by 25% in first month.",
+    tags: ["One-Page", "Restaurant", "Mobile-First"],
   },
   {
-    id: "urban-fitness",
-    title: "Urban Fitness",
+    id: "fitness-studio",
+    title: "Fitness Studio",
     category: "Gym",
-    problem: "Outdated website wasn't mobile-friendly and failed to convert visitors.",
-    solution: "Modern 3-page site with class schedule, trainer profiles, and membership signup.",
-    result: "Mobile traffic up 60%. Membership inquiries doubled in first month.",
-    tags: ["Multi-Page", "Fitness", "Mobile-First"],
+    problem: "New fitness studio needed to establish credibility and attract members in competitive market.",
+    solution: "Modern multi-page site with class schedules, trainer profiles, pricing, and membership signup.",
+    result: "Professional online presence helped secure 50+ new members in first quarter.",
+    tags: ["Multi-Page", "Fitness", "Membership"],
   },
   {
-    id: "bloom-studio",
-    title: "Bloom Studio",
-    category: "Florist",
-    problem: "New business with no online presence competing against established shops.",
-    solution: "Elegant one-page site showcasing arrangements with inquiry form.",
-    result: "First online order within 24 hours of launch.",
-    tags: ["One-Page", "Local Business", "Startup"],
+    id: "creative-agency",
+    title: "Creative Agency",
+    category: "Agency",
+    problem: "Agency needed a portfolio site to showcase work and attract new clients.",
+    solution: "Elegant portfolio site with project galleries, team section, and service inquiry form.",
+    result: "Professional showcase increased client inquiries by 60%. Site serves as primary lead generator.",
+    tags: ["Portfolio", "Agency", "Showcase"],
   },
 ];
 
