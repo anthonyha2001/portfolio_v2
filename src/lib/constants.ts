@@ -87,16 +87,6 @@ export const portfolioPreview = [
     category: "Yacht Maintenance",
     image: "/eliceradice.png",
   },
-  {
-    title: "Local Café",
-    category: "Restaurant",
-    image: "/portfolio/cafe.jpg",
-  },
-  {
-    title: "Fitness Studio",
-    category: "Gym",
-    image: "/portfolio/gym.jpg",
-  },
 ];
 
 export const serviceTiers = [
@@ -241,33 +231,6 @@ export const portfolioProjects = [
     solution: "Elegant multi-page site showcasing arrangements with inquiry form.",
     result: "Professional online presence established. Service inquiries increased 40% within first month. Now competing effectively with established competitors.",
     tags: ["Multi-Page", "Yacht Services", "Professional"],
-  },
-  {
-    id: "local-cafe",
-    title: "Local Café",
-    category: "Restaurant",
-    problem: "Small café needed an online presence to showcase menu and attract local customers.",
-    solution: "Clean, mobile-first website with menu display, location information, and contact form.",
-    result: "Launched in 72 hours. Online orders increased by 25% in first month.",
-    tags: ["One-Page", "Restaurant", "Mobile-First"],
-  },
-  {
-    id: "fitness-studio",
-    title: "Fitness Studio",
-    category: "Gym",
-    problem: "New fitness studio needed to establish credibility and attract members in competitive market.",
-    solution: "Modern multi-page site with class schedules, trainer profiles, pricing, and membership signup.",
-    result: "Professional online presence helped secure 50+ new members in first quarter.",
-    tags: ["Multi-Page", "Fitness", "Membership"],
-  },
-  {
-    id: "creative-agency",
-    title: "Creative Agency",
-    category: "Agency",
-    problem: "Agency needed a portfolio site to showcase work and attract new clients.",
-    solution: "Elegant portfolio site with project galleries, team section, and service inquiry form.",
-    result: "Professional showcase increased client inquiries by 60%. Site serves as primary lead generator.",
-    tags: ["Portfolio", "Agency", "Showcase"],
   },
 ];
 
