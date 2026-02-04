@@ -5,11 +5,11 @@ import Link from 'next/link';
 
 const socialNetworks = [
   { name: 'GitHub', url: 'https://github.com/anthonyhasrouny', icon: 'github' },
-  { name: 'Instagram', url: 'https://instagram.com/anthonyhasrouny', icon: 'instagram' },
-  { name: 'Facebook', url: 'https://facebook.com/anthonyhasrouny', icon: 'facebook' },
-  { name: 'WhatsApp', url: 'https://wa.me/1234567890', icon: 'whatsapp' },
-  { name: 'X', url: 'https://x.com/anthonyhasrouny', icon: 'x' },
-  { name: 'TikTok', url: 'https://tiktok.com/@anthonyhasrouny', icon: 'tiktok' },
+  { name: 'Instagram', url: 'https://www.instagram.com/anthonyy_hasrouny', icon: 'instagram' },
+  { name: 'Facebook', url: 'https://www.facebook.com/people/Anthony-Hasrouny/61587347643610/', icon: 'facebook' },
+  { name: 'WhatsApp', url: 'https://wa.me/96181802886', icon: 'whatsapp' },
+  { name: 'X', url: 'https://x.com/AnthonyHas59075', icon: 'x' },
+  { name: 'TikTok', url: 'https://www.tiktok.com/@anthonyhasrouny', icon: 'tiktok' },
 ];
 
 const icons: Record<string, JSX.Element> = {
