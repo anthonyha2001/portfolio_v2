@@ -3,13 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSession, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { MobileMenu } from './mobile-menu';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { status } = useSession();
 
   const navLinks = [
     { href: '/services', label: 'Services' },
@@ -97,7 +95,6 @@ export function Header() {
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
         navLinks={navLinks}
-        status={status}
       />
     </>
   );

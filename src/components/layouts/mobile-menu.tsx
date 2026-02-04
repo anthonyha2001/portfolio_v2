@@ -1,17 +1,15 @@
 'use client';
 
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   navLinks: Array<{ href: string; label: string }>;
-  status: 'loading' | 'authenticated' | 'unauthenticated';
 }
 
-export function MobileMenu({ isOpen, onClose, navLinks, status }: MobileMenuProps) {
+export function MobileMenu({ isOpen, onClose, navLinks }: MobileMenuProps) {
   if (!isOpen) return null;
 
   return (
