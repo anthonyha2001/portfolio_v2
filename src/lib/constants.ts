@@ -379,33 +379,42 @@ export const contact = {
   expectation: "What happens next: I review your message, confirm fit, and send you access to the client portal to get started.",
 };
 
+export const socialNetworks = [
+  { name: "GitHub", url: "https://github.com/anthonyhasrouny", icon: "github" },
+  { name: "Instagram", url: "https://instagram.com/anthonyhasrouny", icon: "instagram" },
+  { name: "Facebook", url: "https://facebook.com/anthonyhasrouny", icon: "facebook" },
+  { name: "WhatsApp", url: "https://wa.me/1234567890", icon: "whatsapp" },
+  { name: "X", url: "https://x.com/anthonyhasrouny", icon: "x" },
+  { name: "TikTok", url: "https://tiktok.com/@anthonyhasrouny", icon: "tiktok" },
+];
+
 export const contactFormFields = [
   {
     name: "name",
-    label: "Your Name",
+    label: "Name",
     type: "text",
     required: true,
-    placeholder: "John Smith",
+    placeholder: "Your name",
+  },
+  {
+    name: "phone",
+    label: "Phone Number",
+    type: "tel",
+    required: true,
+    placeholder: "Your phone number",
   },
   {
     name: "email",
-    label: "Email Address",
+    label: "Email",
     type: "email",
     required: true,
-    placeholder: "john@example.com",
-  },
-  {
-    name: "business",
-    label: "Business Name",
-    type: "text",
-    required: false,
-    placeholder: "Your Business LLC",
+    placeholder: "Your email",
   },
   {
     name: "service",
     label: "Service Interested In",
     type: "select",
-    required: true,
+    required: false,
     options: [
       "Website Development",
       "SEO Optimization",
@@ -417,18 +426,11 @@ export const contactFormFields = [
     ],
   },
   {
-    name: "timeline",
-    label: "When do you need it?",
-    type: "select",
-    required: true,
-    options: ["This week", "Within 2 weeks", "This month", "Just exploring"],
-  },
-  {
     name: "message",
     label: "Tell me about your project",
-    type: "textarea",
-    required: true,
-    placeholder: "What does your business do? What do you need from your website?",
+    type: "text",
+    required: false,
+    placeholder: "Describe your project or ask any questions...",
   },
 ];
 

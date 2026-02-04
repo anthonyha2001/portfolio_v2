@@ -3,159 +3,189 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { contactFormSchema, type ContactFormData } from '@/lib/validations';
-import { contactFormFields } from '@/lib/constants';
+import { z } from 'zod';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+
+const contactSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  phone: z.string().min(1, 'Phone number is required'),
+  email: z.string().email('Valid email is required'),
+  service: z.string().optional(),
+  message: z.string().optional(),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 export function ContactForm() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [canAccessIntake, setCanAccessIntake] = useState(false);
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
+    resolver: zodResolver(contactSchema),
   });
 
+  const watchedFields = watch(['name', 'phone', 'email']);
+  const hasRequiredFields = watchedFields[0] && watchedFields[1] && watchedFields[2];
+
   const onSubmit = async (data: ContactFormData) => {
-    try {
-      setIsSubmitting(true);
-      setIsSuccess(false);
-      setError(null);
-
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const payload = (await response.json().catch(() => null)) as
-          | { error?: string }
-          | null;
-        throw new Error(payload?.error || 'Failed to send message.');
-      }
-
-      setIsSuccess(true);
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'Something went wrong. Please try again.',
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
+    setIsLoading(true);
+    console.log('Form submitted:', data);
+    
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    
+    setIsLoading(false);
+    setIsSubmitted(true);
+    setCanAccessIntake(true);
   };
 
-  if (isSuccess) {
+  if (isSubmitted) {
     return (
-      <div className="bg-light border border-gray-200 rounded-lg p-8 text-center">
-        <p className="text-lg font-body text-dark">
-          Message sent! I&apos;ll be in touch within 24 hours.
+      <div className="bg-white rounded-2xl p-8 text-center">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-xl font-display font-bold text-dark mb-2">
+          Message Sent!
+        </h3>
+        <p className="text-gray mb-6">
+          I&apos;ll get back to you within 24 hours.
         </p>
+        {canAccessIntake && (
+          <Link
+            href="/portal/intake"
+            className="inline-block px-6 py-3 bg-accent text-white font-display font-semibold rounded-lg hover:bg-accent/90 transition"
+          >
+            Start Intake Form →
+          </Link>
+        )}
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {error && (
-        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-body text-red-700">
-          {error}
-        </div>
-      )}
-      {contactFormFields.map((field) => (
-        <div key={field.name}>
-          <label
-            htmlFor={field.name}
-            className="block text-sm font-body font-medium text-dark mb-2"
-          >
-            {field.label}
-            {field.required && <span className="text-accent ml-1">*</span>}
-          </label>
+    <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-2xl p-8 space-y-6">
+      {/* Name */}
+      <div>
+        <label className="block font-display font-semibold text-dark mb-2">
+          Name <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          {...register('name')}
+          placeholder="Your name"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none transition"
+        />
+        {errors.name && (
+          <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+        )}
+      </div>
 
-          {field.type === 'select' ? (
-            <>
-              <select
-                id={field.name}
-                {...register(field.name as keyof ContactFormData)}
-                className={`w-full px-4 py-3 border rounded-md font-body text-dark focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent ${
-                  errors[field.name as keyof ContactFormData]
-                    ? 'border-red-500'
-                    : 'border-gray-300'
-                }`}
-              >
-                <option value="">Select an option...</option>
-                {field.options?.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
-              {errors[field.name as keyof ContactFormData] && (
-                <p className="mt-1 text-sm text-red-600 font-body">
-                  {errors[field.name as keyof ContactFormData]?.message as string}
-                </p>
-              )}
-            </>
-          ) : field.type === 'textarea' ? (
-            <>
-              <textarea
-                id={field.name}
-                rows={4}
-                {...register(field.name as keyof ContactFormData)}
-                placeholder={field.placeholder}
-                className={`w-full px-4 py-3 border rounded-md font-body text-dark focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent resize-y ${
-                  errors[field.name as keyof ContactFormData]
-                    ? 'border-red-500'
-                    : 'border-gray-300'
-                }`}
-              />
-              {errors[field.name as keyof ContactFormData] && (
-                <p className="mt-1 text-sm text-red-600 font-body">
-                  {errors[field.name as keyof ContactFormData]?.message as string}
-                </p>
-              )}
-            </>
-          ) : (
-            <>
-              <input
-                type={field.type}
-                id={field.name}
-                {...register(field.name as keyof ContactFormData)}
-                placeholder={field.placeholder}
-                className={`w-full px-4 py-3 border rounded-md font-body text-dark focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent ${
-                  errors[field.name as keyof ContactFormData]
-                    ? 'border-red-500'
-                    : 'border-gray-300'
-                }`}
-              />
-              {errors[field.name as keyof ContactFormData] && (
-                <p className="mt-1 text-sm text-red-600 font-body">
-                  {errors[field.name as keyof ContactFormData]?.message as string}
-                </p>
-              )}
-            </>
-          )}
-        </div>
-      ))}
+      {/* Phone */}
+      <div>
+        <label className="block font-display font-semibold text-dark mb-2">
+          Phone Number <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="tel"
+          {...register('phone')}
+          placeholder="Your phone number"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none transition"
+        />
+        {errors.phone && (
+          <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+        )}
+      </div>
 
+      {/* Email */}
+      <div>
+        <label className="block font-display font-semibold text-dark mb-2">
+          Email <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="email"
+          {...register('email')}
+          placeholder="Your email"
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none transition"
+        />
+        {errors.email && (
+          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+        )}
+      </div>
+
+      {/* Service */}
+      <div>
+        <label className="block font-display font-semibold text-dark mb-2">
+          Service Interested In
+        </label>
+        <select
+          {...register('service')}
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none transition bg-white"
+        >
+          <option value="">Select a service</option>
+          <option value="website-development">Website Development</option>
+          <option value="seo-optimization">SEO Optimization</option>
+          <option value="website-maintenance">Website Maintenance</option>
+          <option value="hosting-domain">Hosting & Domain</option>
+          <option value="website-optimization">Website Optimization</option>
+          <option value="addons-integrations">Add-ons & Integrations</option>
+          <option value="not-sure">Not sure yet</option>
+        </select>
+      </div>
+
+      {/* Message */}
+      <div>
+        <label className="block font-display font-semibold text-dark mb-2">
+          Tell me about your project
+        </label>
+        <textarea
+          {...register('message')}
+          placeholder="Describe your project or ask any questions..."
+          rows={4}
+          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-accent focus:outline-none transition resize-none"
+        />
+      </div>
+
+      {/* Submit Button */}
       <Button
         type="submit"
         variant="primary"
         size="lg"
+        disabled={isLoading}
         className="w-full"
-        disabled={isSubmitting}
       >
-        {isSubmitting ? 'Sending...' : 'Send Message'}
+        {isLoading ? 'Sending...' : 'Send Message'}
       </Button>
+
+      {/* Intake Form Access */}
+      <div className="pt-4 border-t border-gray-100">
+        <p className="text-sm text-gray text-center mb-3">
+          Ready to start your project?
+        </p>
+        {hasRequiredFields ? (
+          <Link
+            href="/portal/intake"
+            className="block w-full text-center px-6 py-3 bg-dark text-white font-display font-semibold rounded-lg hover:bg-dark/90 transition"
+          >
+            Go to Intake Form →
+          </Link>
+        ) : (
+          <div className="w-full text-center px-6 py-3 bg-gray-100 text-gray font-display font-semibold rounded-lg cursor-not-allowed">
+            Fill in name, phone & email to access intake form
+          </div>
+        )}
+      </div>
     </form>
   );
 }
+
 
