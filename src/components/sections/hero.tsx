@@ -41,7 +41,7 @@ export function Hero() {
                   href="/services"
                   className="transition-colors hover:text-accent hover:underline underline-offset-4"
                 >
-                  See pricing
+                  Services
                 </Link>
                 <span className="hidden sm:inline text-gray-300">•</span>
                 <Link
