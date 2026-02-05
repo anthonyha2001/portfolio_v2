@@ -4,7 +4,7 @@ import type { JSX } from 'react';
 import Link from 'next/link';
 
 const socialNetworks = [
-  { name: 'GitHub', url: 'https://github.com/anthonyhasrouny', icon: 'github' },
+  { name: 'GitHub', url: 'https://github.com/anthonyha2001', icon: 'github' },
   { name: 'Instagram', url: 'https://www.instagram.com/anthonyy_hasrouny', icon: 'instagram' },
   { name: 'Facebook', url: 'https://www.facebook.com/people/Anthony-Hasrouny/61587347643610/', icon: 'facebook' },
   { name: 'WhatsApp', url: 'https://wa.me/96181802886', icon: 'whatsapp' },

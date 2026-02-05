@@ -36,7 +36,13 @@ export const metadata: Metadata = {
   authors: [{ name: 'Anthony Hasrouny' }],
   creator: 'Anthony Hasrouny',
   icons: {
-    icon: '/logo_navybg.png',
+    icon: [
+      { url: '/logo_navybg.png', sizes: 'any' },
+    ],
+    apple: [
+      { url: '/logo_navybg.png', sizes: '180x180' },
+    ],
+    shortcut: '/logo_navybg.png',
   },
   openGraph: {
     type: 'website',
